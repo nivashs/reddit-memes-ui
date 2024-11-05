@@ -9,3 +9,6 @@ npm i
 ```
 npm run dev
 ```
+
+### Front-End is deployed and running at:
+https://reddit-memes-api.onrender.com/

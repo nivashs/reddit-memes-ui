@@ -19,7 +19,7 @@ export default function History() {
     queryKey: ['memeHistory', sortBy, order, limit],
     queryFn: async ({ pageParam = null }) => {
       const cursor = pageParam ? `&cursor=${pageParam}` : '';
-      const url = ENDPOINTS.allMemes(10, 'date', 'desc', cursor);
+      const url = ENDPOINTS.allMemes(limit, sortBy, order, cursor);
       const response = await fetch(url);
       if (!response.ok) throw new Error('Network response was not ok');
       return response.json();
