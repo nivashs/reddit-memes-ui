@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { ENDPOINTS } from '../config/constants';
+import LoadingRing from './utils/loading-ring';
 
 export default function TopMemes() {
   const { data, isLoading, error } = useQuery({
@@ -16,10 +17,10 @@ export default function TopMemes() {
 
   const handleRedirect = (permalink) => {
     const redditUrl = `${permalink}`;
-    window.open(redditUrl, '_blank', 'noopener,noreferrer');
+    window.open(redditUrl);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingRing size="large" />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

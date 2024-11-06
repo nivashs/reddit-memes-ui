@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { ENDPOINTS } from '../config/constants';
+import LoadingRing from './utils/loading-ring';
 
 export default function History() {
   const [sortBy, setSortBy] = useState('created_at');
@@ -49,7 +50,7 @@ export default function History() {
     window.open(redditUrl, '_blank', 'noopener,noreferrer');
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingRing size="large" />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
@@ -113,16 +114,21 @@ export default function History() {
           ))}
         </div>
       ))}
-      
       {hasNextPage && (
-        <button
-          onClick={() => fetchNextPage()}
-          disabled={isFetchingNextPage}
-          className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          {isFetchingNextPage ? 'Loading more...' : 'Load More'}
-        </button>
+  <div className="flex justify-center my-8">
+    <button
+      onClick={() => fetchNextPage()}
+      disabled={isFetchingNextPage}
+      className="px-6 py-2 w-48 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 flex items-center justify-center"
+    >
+      {isFetchingNextPage ? (
+        <LoadingRing size="small" />
+      ) : (
+        'Load More'
       )}
+    </button>
+  </div>
+)}
     </div>
   );
 }
